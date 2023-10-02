@@ -9,7 +9,7 @@ jobs:
       fail-fast: false
       matrix:
         file:
-        - kinesis_qmk_hady.json
+        - kinesis_qmk.json
 
     steps:
 
