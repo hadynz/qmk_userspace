@@ -8,11 +8,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        file:
-        - kinesis_qmk.json
+        keyboard:
+          - kinesis
 
     steps:
-
     - name: Disable git safe directory checks
       run : git config --global --add safe.directory '*'
 
@@ -20,15 +19,21 @@ jobs:
       uses: actions/checkout@v3
       with:
         repository: qmk/qmk_firmware
-        submodules: true
+        submodules: recursive
 
     - name: Checkout userspace
       uses: actions/checkout@v3
       with:
         path: users/${{ github.actor }}
 
+    - name: Add keyboards
+      run: |
+        for keyboard_folder in users/${{ github.actor }}/keyboards/*; do
+          ln -s $(realpath $keyboard_folder) keyboards/
+        done
+
     - name: Build firmware
-      run: qmk compile "users/${{ github.actor }}/${{ matrix.file }}"
+      run: qmk compile "users/${{ github.actor }}/keymaps/${{ matrix.keyboard }}.json"
 
     - name: Archive firmware
       uses: actions/upload-artifact@v3
