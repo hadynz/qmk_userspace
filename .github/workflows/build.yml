@@ -9,7 +9,7 @@ jobs:
       fail-fast: false
       matrix:
         keyboard:
-          - kinesis
+          - hadynz-kinesis
 
     steps:
     - name: Disable git safe directory checks
