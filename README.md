@@ -1,5 +1,7 @@
 # Hady's QMK userspace
 
+![Build status](https://github.com/hadynz/qmk_userspace/actions/workflows/build.yml/badge.svg)
+
 This is a QMK "[userspace][1]" for my Kinesis Advantage keyboard firmware -- my 
 very first ergo keyboard.
 

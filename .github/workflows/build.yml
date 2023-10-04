@@ -1,4 +1,4 @@
-name: Build QMK firmware
+name: QMK firmware build
 on: [push, workflow_dispatch]
 
 jobs:
@@ -33,16 +33,13 @@ jobs:
         done
 
     - name: Build firmware
-      id: build
-      run: |
-        qmk compile "users/${{ github.actor }}/keymaps/${{ matrix.keyboard }}.json"
-        echo "{tag_name}={$(git tag --sort version:refname | tail -n 1)}" >> $GITHUB_OUTPUT
+      run: qmk compile "users/${{ github.actor }}/keymaps/${{ matrix.keyboard }}.json"
 
     - name: Archive firmware
       uses: actions/upload-artifact@v3
       continue-on-error: true
       with:
-        name: ${{ matrix.keyboard }}_${{ steps.build.outputs.tag_name }}
+        name: ${{ matrix.keyboard }}_${{ github.run_number }}
         path: |
           *.hex
           *.bin
