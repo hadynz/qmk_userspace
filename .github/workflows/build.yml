@@ -9,7 +9,7 @@ jobs:
       fail-fast: false
       matrix:
         keyboard:
-          - hadynz-kinesis
+          - kinesis/stapelberg
 
     steps:
     - name: Disable git safe directory checks
@@ -20,15 +20,19 @@ jobs:
       with:
         repository: qmk/qmk_firmware
         submodules: recursive
+        persist-credentials: false
 
     - name: Checkout userspace
       uses: actions/checkout@v3
       with:
         path: users/${{ github.actor }}
+        persist-credentials: false
+    
+    - name: Symlink userspace
+      run: ln -s users/${{ github.actor }} keyboards/users/${{ github.actor }}
 
     - name: Build firmware
-      run: make kinesis/stapelberg:hadynz
-      # run: qmk compile "users/${{ github.actor }}/keymaps/${{ matrix.keyboard }}.json"
+      run: qmk compile -c users/${{ github.actor }}/keymaps/${{ matrix.keyboard }}.json
 
     - name: Archive firmware
       uses: actions/upload-artifact@v3
