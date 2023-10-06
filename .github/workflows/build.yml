@@ -28,11 +28,11 @@ jobs:
         path: users/${{ github.actor }}
         persist-credentials: false
     
-    # - name: Symlink userspace
-    #   run: ln -s users/${{ github.actor }} keyboards/users/${{ github.actor }}
+    - name: Symlink userspace
+      run: ln -s users/${{ github.actor }} keyboards/kinesis/keymaps/${{ github.actor }}
 
     - name: Build firmware
-      run: qmk compile -kb kinesis/stapelberg -km ${{ github.actor }}
+      run: qmk compile --keyboard kinesis/stapelberg --keymap ${{ github.actor }}
 
     - name: Archive firmware
       uses: actions/upload-artifact@v3
