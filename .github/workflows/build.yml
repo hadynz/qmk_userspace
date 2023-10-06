@@ -34,8 +34,8 @@ jobs:
     - name: Build firmware
       # run: qmk compile -kb kinesis/stapelberg -km ${{ github.actor }}
       run: |
-        qmk list-keymaps -kb planck/ez
-        qmk list-keymaps -kb kinesis/stapelberg
+        ls -la
+        cp users/${{ github.actor }} keyboards/kinesis/keymaps/${{ github.actor }}
         find keyboards/kinesis/
         make kinesis/stapelberg:${{ github.actor }}
 
