@@ -5,11 +5,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     container: qmkfm/qmk_cli
-    strategy:
-      fail-fast: false
-      matrix:
-        keyboard:
-          - kinesis/stapelberg
 
     steps:
     - name: Disable git safe directory checks
@@ -29,18 +24,13 @@ jobs:
         persist-credentials: false
     
     - name: Build firmware
-      # run: qmk compile -kb kinesis/stapelberg -km ${{ github.actor }}
-      run: |
-        ls -la
-        find keyboards/kinesis/keymaps/${{ github.actor }}
-        find keyboards/kinesis/
-        make kinesis/stapelberg:${{ github.actor }}
+      run: qmk compile -kb kinesis/stapelberg -km ${{ github.actor }}
 
     - name: Archive firmware
       uses: actions/upload-artifact@v3
       continue-on-error: true
       with:
-        name: ${{ matrix.keyboard }}_${{ github.run_number }}
+        name: kinesis_hadynz_qmk_keymap_${{ github.run_number }}
         path: |
           *.hex
           *.bin
