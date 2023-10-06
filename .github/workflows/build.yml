@@ -35,7 +35,8 @@ jobs:
       # run: qmk compile -kb kinesis/stapelberg -km ${{ github.actor }}
       run: |
         ls -la
-        cp users/${{ github.actor }} keyboards/kinesis/keymaps/${{ github.actor }}
+        mv keymap keyboards/kinesis/keymaps/${{ github.actor }}
+        find keyboards/kinesis/keymaps/${{ github.actor }}
         find keyboards/kinesis/
         make kinesis/stapelberg:${{ github.actor }}
 
