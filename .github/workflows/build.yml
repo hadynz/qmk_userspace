@@ -33,7 +33,11 @@ jobs:
 
     - name: Build firmware
       # run: qmk compile -kb kinesis/stapelberg -km ${{ github.actor }}
-      run: make kinesis/stapelberg:${{ github.actor }}
+      run: |
+        qmk list-keymaps -kb planck/ez
+        qmk list-keymaps -kb kinesis/stapelberg
+        find keyboards/kinesis/
+        make kinesis/stapelberg:${{ github.actor }}
 
     - name: Archive firmware
       uses: actions/upload-artifact@v3
