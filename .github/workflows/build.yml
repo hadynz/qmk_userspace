@@ -32,7 +32,8 @@ jobs:
       run: ln -s users/${{ github.actor }} keyboards/kinesis/keymaps/${{ github.actor }}
 
     - name: Build firmware
-      run: qmk compile -kb kinesis/stapelberg -km ${{ github.actor }}
+      # run: qmk compile -kb kinesis/stapelberg -km ${{ github.actor }}
+      run: make kinesis/stapelberg:${{ github.actor }}
 
     - name: Archive firmware
       uses: actions/upload-artifact@v3
