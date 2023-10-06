@@ -26,14 +26,9 @@ jobs:
       with:
         path: users/${{ github.actor }}
 
-    - name: Add keyboards
-      run: |
-        for keyboard_folder in users/${{ github.actor }}/keyboards/*; do
-          ln -s $(realpath $keyboard_folder) keyboards/
-        done
-
     - name: Build firmware
-      run: qmk compile "users/${{ github.actor }}/keymaps/${{ matrix.keyboard }}.json"
+      run: make kinesis/stapelberg:hadynz
+      # run: qmk compile "users/${{ github.actor }}/keymaps/${{ matrix.keyboard }}.json"
 
     - name: Archive firmware
       uses: actions/upload-artifact@v3
