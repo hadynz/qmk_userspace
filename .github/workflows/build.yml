@@ -25,17 +25,13 @@ jobs:
     - name: Checkout userspace
       uses: actions/checkout@v3
       with:
-        path: users/${{ github.actor }}
+        path: keyboards/kinesis/keymaps/${{ github.actor }}
         persist-credentials: false
     
-    - name: Symlink userspace
-      run: ln -s users/${{ github.actor }} keyboards/kinesis/keymaps/${{ github.actor }}
-
     - name: Build firmware
       # run: qmk compile -kb kinesis/stapelberg -km ${{ github.actor }}
       run: |
         ls -la
-        mv keymap keyboards/kinesis/keymaps/${{ github.actor }}
         find keyboards/kinesis/keymaps/${{ github.actor }}
         find keyboards/kinesis/
         make kinesis/stapelberg:${{ github.actor }}
