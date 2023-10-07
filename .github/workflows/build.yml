@@ -28,17 +28,14 @@ jobs:
     
     - name: Build firmware
       run: |
-        ls -la
-        find hadynz
-        find keyboards/kinesis/keymaps/
         qmk compile -kb kinesis/stapelberg -km ${{ github.actor }}
+
+    - name: Rename firmware files with run number
+      run: rename 's/(.*)\.hex/$1_${{ github.run_number }}.hex/' *.hex
 
     - name: Archive firmware
       uses: actions/upload-artifact@v3
       continue-on-error: true
       with:
         name: kinesis_${{ github.actor }}_qmk_keymap_${{ github.run_number }}
-        path: |
-          *.hex
-          *.bin
-          *.uf2
+        path: *.hex
