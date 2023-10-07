@@ -38,4 +38,5 @@ jobs:
       continue-on-error: true
       with:
         name: kinesis_${{ github.actor }}_qmk_keymap_${{ github.run_number }}
-        path: *.hex
+        path: |
+          *.hex
