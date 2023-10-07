@@ -31,7 +31,8 @@ jobs:
         qmk compile -kb kinesis/stapelberg -km ${{ github.actor }}
 
     - name: Rename firmware files with run number
-      run: rename 's/(.*)\.hex/$1_${{ github.run_number }}.hex/' *.hex
+      run: |
+        for file in *.hex; do mv $file ${file%.hex}_${{ github.run_number }}.hex; done
 
     - name: Archive firmware
       uses: actions/upload-artifact@v3

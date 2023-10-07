@@ -19,7 +19,7 @@ ln -s $PWD/keymap ../qmk_firmware/keyboards/kinesis/keymaps/hadynz
 qmk compile -kb kinesis/stapelberg -km hadynz
 
 # Create (QMK Configurator) JSON file from keymap
-
+qmk c2json -kb kinesis/stapelberg -km hadynz ./keymap/keymap.c > keymap.json
 ```
 
 ## Background
