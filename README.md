@@ -11,7 +11,6 @@ very first ergo keyboard.
 2. Link this repository to the qmk directory a keycap folder
 
 ```bash
-# $PWD is the path to this repository
 # Create a symlink of the `keymap` folder into `kinesis` keyboard folder inside qmk directory
 ln -s $PWD/keymap ../qmk_firmware/keyboards/kinesis/keymaps/hadynz
 
@@ -20,6 +19,10 @@ qmk compile -kb kinesis/stapelberg -km hadynz
 
 # Create (QMK Configurator) JSON file from keymap
 qmk c2json -kb kinesis/stapelberg -km hadynz ./keymap/keymap.c > keymap.json
+
+# Render keyma to SVG
+keymap parse -c 10 -q keymap.json > kinesis_keymap.yaml
+keymap draw kinesis_keymap.yaml > kinesis_keymap.svg
 ```
 
 ## Background
