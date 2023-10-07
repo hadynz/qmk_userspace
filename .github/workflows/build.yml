@@ -38,6 +38,6 @@ jobs:
       uses: actions/upload-artifact@v3
       continue-on-error: true
       with:
-        name: kinesis_${{ github.actor }}_qmk_keymap_${{ github.run_number }}
+        name: kinesis_${{ github.actor }}_qmk_keymap_${{ github.run_number }}.hex
         path: |
           *.hex
