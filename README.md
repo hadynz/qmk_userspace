@@ -5,19 +5,38 @@
 This is a QMK "[userspace][1]" for my Kinesis Advantage keyboard firmware -- my 
 very first ergo keyboard.
 
-## The Keyboard
+## Local Development
+
+1. Setup qmk development environment: https://docs.qmk.fm/#/newbs_getting_started
+2. Link this repository to the qmk directory a keycap folder
+
+```bash
+# $PWD is the path to this repository
+# Create a symlink of the `keymap` folder into `kinesis` keyboard folder inside qmk directory
+ln -s $PWD/keymap ../qmk_firmware/keyboards/kinesis/keymaps/hadynz
+
+# Compile
+qmk compile -kb kinesis/stapelberg -km hadynz
+
+# Create (QMK Configurator) JSON file from keymap
+
+```
+
+## Background
+
+### The Keyboard
 
 A Kinesis Advantage 1 keyboard with Cherry MX Brown switches. The keyboard has been 
 modified with the ["stapelberg" mod][3]. In other words, the keyboard's original controller 
 has been gutted and replaced with a Teensy 2.0++ that runs the feature-rich QMK firmware.
 
-## Building and flashing the firmware
+### Building and flashing the firmware
 
 The firmware is automatically built using the QMK CLI that runs on [GitHub Actions][4].
 
 Once built, the firmware is flashed onto the Teensy 2.0++ using the [Teensy Loader][2].
 
-## Layout
+### Layout
 
 I bought my keyboard second hand and have built on top of the previous owner (Uric Marker)'s
 layout which was largely inspired by the [Miryoku layout][5].

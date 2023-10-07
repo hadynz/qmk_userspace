@@ -20,8 +20,11 @@ jobs:
     - name: Checkout userspace
       uses: actions/checkout@v3
       with:
-        path: keyboards/kinesis/keymaps/${{ github.actor }}
+        path: ${{ github.actor }}
         persist-credentials: false
+    
+    - name: Symlink keymap from userspace to qmk directory
+      run: ln -s $PATH/${{ github.actor }}/keymap keyboards/kinesis/keymaps/${{ github.actor }}
     
     - name: Build firmware
       run: qmk compile -kb kinesis/stapelberg -km ${{ github.actor }}
@@ -30,7 +33,7 @@ jobs:
       uses: actions/upload-artifact@v3
       continue-on-error: true
       with:
-        name: kinesis_hadynz_qmk_keymap_${{ github.run_number }}
+        name: kinesis_${{ github.actor }}_qmk_keymap_${{ github.run_number }}
         path: |
           *.hex
           *.bin
