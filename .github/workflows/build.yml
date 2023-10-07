@@ -7,37 +7,37 @@ jobs:
     container: qmkfm/qmk_cli
 
     steps:
-    - name: Disable git safe directory checks
-      run : git config --global --add safe.directory '*'
+      - name: Disable git safe directory checks
+        run: git config --global --add safe.directory '*'
 
-    - name: Checkout QMK
-      uses: actions/checkout@v3
-      with:
-        repository: qmk/qmk_firmware
-        submodules: recursive
-        persist-credentials: false
+      - name: Checkout QMK
+        uses: actions/checkout@v3
+        with:
+          repository: qmk/qmk_firmware
+          submodules: recursive
+          persist-credentials: false
 
-    - name: Checkout userspace
-      uses: actions/checkout@v3
-      with:
-        path: ${{ github.actor }}
-        persist-credentials: false
-    
-    - name: Symlink keymap from userspace to qmk directory
-      run: ln -s ../../../${{ github.actor }}/keymap keyboards/kinesis/keymaps/${{ github.actor }}
-    
-    - name: Build firmware
-      run: |
-        qmk compile -kb kinesis/stapelberg -km ${{ github.actor }}
+      - name: Checkout userspace
+        uses: actions/checkout@v3
+        with:
+          path: ${{ github.actor }}
+          persist-credentials: false
 
-    - name: Rename firmware files with run number
-      run: |
-        for file in *.hex; do mv $file ${file%.hex}_${{ github.run_number }}.hex; done
+      - name: Symlink keymap from userspace to qmk directory
+        run: ln -s ../../../${{ github.actor }}/keymap keyboards/kinesis/keymaps/${{ github.actor }}
 
-    - name: Archive firmware
-      uses: actions/upload-artifact@v3
-      continue-on-error: true
-      with:
-        name: kinesis_${{ github.actor }}_qmk_keymap_${{ github.run_number }}.hex
-        path: |
-          *.hex
+      - name: Build firmware
+        run: |
+          qmk compile -kb kinesis/stapelberg -km ${{ github.actor }}
+
+      - name: Rename firmware files with run number
+        run: |
+          for file in *.hex; do mv $file ${file%.hex}_${{ github.run_number }}.hex; done
+
+      - name: Archive firmware
+        uses: actions/upload-artifact@v3
+        continue-on-error: true
+        with:
+          name: kinesis_${{ github.actor }}_qmk_keymap_${{ github.run_number }}
+          path: |
+            *.hex
