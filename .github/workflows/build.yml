@@ -32,16 +32,8 @@ jobs:
           qmk compile -kb kinesis/stapelberg -km ${{ github.actor }}
           qmk c2json -kb kinesis/stapelberg -km hadynz keyboards/kinesis/keymaps/${{ github.actor }}/keymap.c > dist/keymap.json
 
-      - name: Install python
-        uses: actions/setup-python@v2
-        with:
-          python-version: "3.10"
-      
-      - name: Install pipx
-        uses: CfirTsabari/actions-pipx@v1
-
       - name: Install keymap-drawer
-        run: pip install --user keymap-drawer
+        run: python3 -m pip install keymap-drawer
       
       - name: Draw keymap and package        
         run: |
