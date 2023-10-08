@@ -29,13 +29,16 @@ jobs:
       # - name: Build firmware
       #   run: |
       #     qmk compile -kb kinesis/stapelberg -km ${{ github.actor }}
-      
-      - uses: actions/setup-python@v4
+
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v2
         with:
           python-version: 3.9
           cache: 'pip' # caching pip dependencies
-      - uses: CfirTsabari/actions-pipx@v1
-      - run: pip install --user keymap-drawer
+      - name: Run image
+        uses: CfirTsabari/actions-pipx@v1
+      - name: Run something using pipx
+        run: pip install --user keymap-drawer
 
       # - name: Rename firmware files with run number
       #   run: |
