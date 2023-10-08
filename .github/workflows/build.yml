@@ -40,8 +40,8 @@ jobs:
         run: pip install --user keymap-drawer
       - run: |
           ls -la
-          find ${{ github.actor }}
-          keymap parse -c 10 -q ${{ github.actor }}/keymap/kinesis_qmk_220911_mousekeys_rgb.json > kinesis_keymap.yaml
+          find keymap
+          keymap parse -c 10 -q keymap/kinesis_qmk_220911_mousekeys_rgb.json > kinesis_keymap.yaml
 
       # - name: Rename firmware files with run number
       #   run: |
