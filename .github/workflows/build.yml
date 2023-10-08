@@ -29,6 +29,10 @@ jobs:
       - name: Build firmware
         run: |
           qmk compile -kb kinesis/stapelberg -km ${{ github.actor }}
+        
+      - name: Draw keymap layout
+        run: |
+          pipx install keymap-drawer
 
       - name: Rename firmware files with run number
         run: |
