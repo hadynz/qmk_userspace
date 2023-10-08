@@ -32,6 +32,8 @@ jobs:
       
       - name: Install keymap-drawer
         uses: actions/setup-python@v4 
+        with:
+          python-version: '3.10'
       - run: pip install --user keymap-drawer
 
       - name: Rename firmware files with run number
