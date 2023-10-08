@@ -7,15 +7,15 @@ jobs:
     # container: qmkfm/qmk_cli
 
     steps:
-      # - name: Disable git safe directory checks
-      #   run: git config --global --add safe.directory '*'
+      - name: Disable git safe directory checks
+        run: git config --global --add safe.directory '*'
 
-      # - name: Checkout QMK
-      #   uses: actions/checkout@v3
-      #   with:
-      #     repository: qmk/qmk_firmware
-      #     submodules: recursive
-      #     persist-credentials: false
+      - name: Checkout QMK
+        uses: actions/checkout@v3
+        with:
+          repository: qmk/qmk_firmware
+          submodules: recursive
+          persist-credentials: false
 
       - name: Checkout userspace
         uses: actions/checkout@v3
@@ -23,25 +23,31 @@ jobs:
           path: ${{ github.actor }}
           persist-credentials: false
 
-      # - name: Symlink keymap from userspace to qmk directory
-      #   run: ln -s ../../../${{ github.actor }}/keymap keyboards/kinesis/keymaps/${{ github.actor }}
+      - name: Symlink keymap from userspace to qmk directory
+        run: ln -s ../../../${{ github.actor }}/keymap keyboards/kinesis/keymaps/${{ github.actor }}
 
-      # - name: Build firmware
-      #   run: |
-      #     qmk compile -kb kinesis/stapelberg -km ${{ github.actor }}
+      - name: Build firmware
+        run: |
+          mkdir dist
+          qmk compile -kb kinesis/stapelberg -km ${{ github.actor }}
+          qmk c2json -kb kinesis/stapelberg -km hadynz keyboards/kinesis/keymaps/${{ github.actor }}/keymap.c > dist/keymap.json
 
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v2
+      - name: Install python
+        uses: actions/setup-python@v2
         with:
           python-version: "3.10"
-      - name: Run image
+      
+      - name: Install pipx
         uses: CfirTsabari/actions-pipx@v1
-      - name: Run something using pipx
+
+      - name: Install keymap-drawer
         run: pip install --user keymap-drawer
-      - run: |
-          ls -la
-          find keymap
-          keymap parse -c 10 -q keymap/keymap.json > kinesis_keymap.yaml
+      
+      - name: Draw keymap and package        
+        run: |
+          keymap parse -c 10 -q dist/keymap.json > keymap.yaml
+          keymap draw dist/keymap.yaml > dist/keymap.svg
+          find dist
 
       # - name: Rename firmware files with run number
       #   run: |
