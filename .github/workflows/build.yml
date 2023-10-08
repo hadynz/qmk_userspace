@@ -34,7 +34,6 @@ jobs:
       - uses: actions/setup-python@v2
         with:
           python-version: 3.9
-          cache: 'pip' # caching pip dependencies
       - name: Run image
         uses: CfirTsabari/actions-pipx@v1
       - name: Run something using pipx
