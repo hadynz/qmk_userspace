@@ -4,46 +4,47 @@ on: [push, workflow_dispatch]
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: qmkfm/qmk_cli
+    # container: qmkfm/qmk_cli
 
     steps:
-      - name: Disable git safe directory checks
-        run: git config --global --add safe.directory '*'
+      # - name: Disable git safe directory checks
+      #   run: git config --global --add safe.directory '*'
 
-      - name: Checkout QMK
-        uses: actions/checkout@v3
-        with:
-          repository: qmk/qmk_firmware
-          submodules: recursive
-          persist-credentials: false
+      # - name: Checkout QMK
+      #   uses: actions/checkout@v3
+      #   with:
+      #     repository: qmk/qmk_firmware
+      #     submodules: recursive
+      #     persist-credentials: false
 
-      - name: Checkout userspace
-        uses: actions/checkout@v3
-        with:
-          path: ${{ github.actor }}
-          persist-credentials: false
+      # - name: Checkout userspace
+      #   uses: actions/checkout@v3
+      #   with:
+      #     path: ${{ github.actor }}
+      #     persist-credentials: false
 
-      - name: Symlink keymap from userspace to qmk directory
-        run: ln -s ../../../${{ github.actor }}/keymap keyboards/kinesis/keymaps/${{ github.actor }}
+      # - name: Symlink keymap from userspace to qmk directory
+      #   run: ln -s ../../../${{ github.actor }}/keymap keyboards/kinesis/keymaps/${{ github.actor }}
 
-      - name: Build firmware
-        run: |
-          qmk compile -kb kinesis/stapelberg -km ${{ github.actor }}
+      # - name: Build firmware
+      #   run: |
+      #     qmk compile -kb kinesis/stapelberg -km ${{ github.actor }}
       
-      - name: Install keymap-drawer
-        uses: actions/setup-python@v4 
+      - uses: actions/setup-python@v4
         with:
-          python-version: '3.10'
+          python-version: 3.9
+          cache: 'pip' # caching pip dependencies
+      - uses: CfirTsabari/actions-pipx@v1
       - run: pip install --user keymap-drawer
 
-      - name: Rename firmware files with run number
-        run: |
-          for file in *.hex; do mv $file ${file%.hex}_${{ github.run_number }}.hex; done
+      # - name: Rename firmware files with run number
+      #   run: |
+      #     for file in *.hex; do mv $file ${file%.hex}_${{ github.run_number }}.hex; done
 
-      - name: Archive firmware
-        uses: actions/upload-artifact@v3
-        continue-on-error: true
-        with:
-          name: kinesis_${{ github.actor }}_qmk_keymap_${{ github.run_number }}
-          path: |
-            *.hex
+      # - name: Archive firmware
+      #   uses: actions/upload-artifact@v3
+      #   continue-on-error: true
+      #   with:
+      #     name: kinesis_${{ github.actor }}_qmk_keymap_${{ github.run_number }}
+      #     path: |
+      #       *.hex
