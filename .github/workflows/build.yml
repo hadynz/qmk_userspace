@@ -30,12 +30,9 @@ jobs:
         run: |
           qmk compile -kb kinesis/stapelberg -km ${{ github.actor }}
       
-      - name: Install pipx
-        uses: CfirTsabari/actions-pipx@v1
-
-      - name: Draw keymap layout
-        run: |
-          pipx install keymap-drawer
+      - name: Install keymap-drawer
+        uses: actions/setup-python@v4 
+      - run: pip install --user keymap-drawer
 
       - name: Rename firmware files with run number
         run: |
