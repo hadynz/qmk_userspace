@@ -5,7 +5,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     container: qmkfm/qmk_cli
-
     steps:
       - name: Disable git safe directory checks
         run: git config --global --add safe.directory '*'
@@ -32,6 +31,21 @@ jobs:
           qmk compile -kb kinesis/stapelberg -km ${{ github.actor }}
           qmk c2json -kb kinesis/stapelberg -km hadynz keyboards/kinesis/keymaps/${{ github.actor }}/keymap.c > dist/keymap.json
 
+      - name: Rename firmware files with run number
+        run: |
+          for file in *.hex; do mv $file ${file%.hex}_${{ github.run_number }}.hex; done
+
+      - name: Archive firmware
+        uses: actions/upload-artifact@v3
+        continue-on-error: true
+        with:
+          name: kinesis_${{ github.actor }}_qmk_keymap_${{ github.run_number }}
+          path: |
+            *.hex
+
+  keymap-image:
+    runs-on: ubuntu-latest
+    steps:
       - name: Install keymap-drawer
         run: python3 -m pip install keymap-drawer
       
@@ -40,15 +54,3 @@ jobs:
           keymap parse -c 10 -q dist/keymap.json > keymap.yaml
           keymap draw dist/keymap.yaml > dist/keymap.svg
           find dist
-
-      # - name: Rename firmware files with run number
-      #   run: |
-      #     for file in *.hex; do mv $file ${file%.hex}_${{ github.run_number }}.hex; done
-
-      # - name: Archive firmware
-      #   uses: actions/upload-artifact@v3
-      #   continue-on-error: true
-      #   with:
-      #     name: kinesis_${{ github.actor }}_qmk_keymap_${{ github.run_number }}
-      #     path: |
-      #       *.hex
