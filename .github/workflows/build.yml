@@ -35,17 +35,18 @@ jobs:
       - name: Upload firmware
         uses: actions/upload-artifact@v3
         with:
-          name: qmk-firmware-artifact
+          name: qmk-firmware-artifact-${{ github.run_number }}
           path: |
             *.hex
             *.json
 
   keymap-image:
-    name: Render keymap & package
+    name: Render keymap
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/download-artifact@v2
+      - name: Download firmware build file
+        uses: actions/download-artifact@v2
         with:
           name: qmk-firmware-artifact-${{ github.run_number }}
 
@@ -59,7 +60,7 @@ jobs:
           keymap draw keymap.yaml > keymap.svg
           ls -la
 
-      - name: Archive firmware
+      - name: Upload rendered keymap
         uses: actions/upload-artifact@v3
         with:
           name: qmk-firmware-artifact-${{ github.run_number }}
