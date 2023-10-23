@@ -38,11 +38,9 @@ jobs:
           name: qmk-firmware-artifact
           path: |
             *.hex
-            *.bin
-            *.json
 
   keymap-image:
-    name: Render QMK keymap and package
+    name: Render keymap & package
     needs: build
     runs-on: ubuntu-latest
     steps:
@@ -58,11 +56,13 @@ jobs:
           ls -la
           keymap parse -c 10 -q keymap.json > keymap.yaml
           keymap draw keymap.yaml > keymap.svg
+          ls -la
 
       - name: Archive firmware
         uses: actions/upload-artifact@v3
-        continue-on-error: true
         with:
-          name: kinesis_${{ github.actor }}_qmk_keymap_${{ github.run_number }}
+          name: qmk-firmware-artifact
           path: |
-            *.hex
+            *.svg
+            *.json
+            *.yaml
