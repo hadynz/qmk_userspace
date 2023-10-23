@@ -2,7 +2,7 @@ name: QMK firmware build
 on: [push, workflow_dispatch]
 
 jobs:
-  build:
+  build-firmware:
     name: Build QMK firmware
     runs-on: ubuntu-latest
     container: qmkfm/qmk_cli
@@ -40,9 +40,9 @@ jobs:
             *.hex
             *.json
 
-  keymap-image:
+  render-keymap:
     name: Render keymap
-    needs: build
+    needs: [build-firmware]
     runs-on: ubuntu-latest
     steps:
       - name: Download firmware build file
@@ -67,4 +67,3 @@ jobs:
           path: |
             *.svg
             *.json
-            *.yaml
