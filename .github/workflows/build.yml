@@ -38,6 +38,7 @@ jobs:
           name: qmk-firmware-artifact
           path: |
             *.hex
+            *.json
 
   keymap-image:
     name: Render keymap & package
@@ -46,7 +47,7 @@ jobs:
     steps:
       - uses: actions/download-artifact@v2
         with:
-          name: qmk-firmware-artifact
+          name: qmk-firmware-artifact-${{ github.run_number }}
 
       - name: Install keymap-drawer
         run: python3 -m pip install keymap-drawer
@@ -61,7 +62,7 @@ jobs:
       - name: Archive firmware
         uses: actions/upload-artifact@v3
         with:
-          name: qmk-firmware-artifact
+          name: qmk-firmware-artifact-${{ github.run_number }}
           path: |
             *.svg
             *.json
