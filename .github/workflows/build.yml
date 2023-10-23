@@ -3,6 +3,7 @@ on: [push, workflow_dispatch]
 
 jobs:
   build:
+    name: Build QMK firmware
     runs-on: ubuntu-latest
     container: qmkfm/qmk_cli
     steps:
@@ -29,11 +30,34 @@ jobs:
         run: |
           mkdir dist
           qmk compile -kb kinesis/stapelberg -km ${{ github.actor }}
-          qmk c2json -kb kinesis/stapelberg -km hadynz keyboards/kinesis/keymaps/${{ github.actor }}/keymap.c > dist/keymap.json
+          qmk c2json -kb kinesis/stapelberg -km hadynz keyboards/kinesis/keymaps/${{ github.actor }}/keymap.c > keymap.json
 
-      - name: Rename firmware files with run number
+      - name: Upload firmware
+        uses: actions/upload-artifact@v3
+        with:
+          name: qmk-firmware-artifact
+          path: |
+            *.hex
+            *.bin
+            *.json
+
+  keymap-image:
+    name: Render QMK keymap and package
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v2
+        with:
+          name: qmk-firmware-artifact
+
+      - name: Install keymap-drawer
+        run: python3 -m pip install keymap-drawer
+      
+      - name: Draw keymap and package        
         run: |
-          for file in *.hex; do mv $file ${file%.hex}_${{ github.run_number }}.hex; done
+          ls -la
+          keymap parse -c 10 -q keymap.json > keymap.yaml
+          keymap draw keymap.yaml > keymap.svg
 
       - name: Archive firmware
         uses: actions/upload-artifact@v3
@@ -42,15 +66,3 @@ jobs:
           name: kinesis_${{ github.actor }}_qmk_keymap_${{ github.run_number }}
           path: |
             *.hex
-
-  keymap-image:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Install keymap-drawer
-        run: python3 -m pip install keymap-drawer
-      
-      - name: Draw keymap and package        
-        run: |
-          keymap parse -c 10 -q dist/keymap.json > keymap.yaml
-          keymap draw dist/keymap.yaml > dist/keymap.svg
-          find dist
