@@ -1,7 +1,8 @@
 #include QMK_KEYBOARD_H
 
 // Keycodes
-#define ____ ____
+#define ____ KC_NO
+
 #define HOME_A LT(_MOUSE, KC_A)
 #define HOME_R LCTL_T(KC_R)
 #define HOME_S LALT_T(KC_S)
@@ -11,11 +12,19 @@
 #define HOME_I RCTL_T(KC_I)
 #define HOME_O LT(_MOUSE, KC_O)
 
+#define THMB_L1 LSFT_T(KC_BSPC)
+#define THMB_L2 KC_DEL
+#define THMB_LA LCAG(KC_F)
+#define THMB_LB HYPR(KC_UP)
+#define THMB_LC HYPR(KC_LEFT)
+#define THMB_LD TG(_MOUSE)
+
+#define THMB_R1 LSFT_T(KC_SPC)
+#define THMB_R2 KC_ENT
+
 // Layers
 enum layer_names {
   _BASE_COLEMAK_DH = 0,
-  _NUMBERS,
-  _SYMBOLS,
   _MOUSE
 };
 
@@ -34,39 +43,17 @@ combo_t key_combos[] = {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_BASE_COLEMAK_DH] = LAYOUT(
-    KC_CAPS, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, KC_PSCR, KC_SCRL, KC_PAUS, RGB_TOG, TG(_BASE_COLEMAK_DH),
+    KC_CAPS, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, KC_F7, KC_F8,   KC_F9, KC_F10, KC_F11, KC_F12, KC_PSCR, KC_SCRL, KC_PAUS, RGB_TOG, TG(_BASE_COLEMAK_DH),
     
-    KC_SLEP, LCTL(KC_DOWN), LCTL(KC_UP), KC_MRWD, KC_MPLY, KC_MFFD,                 KC_MUTE, KC_VOLD, KC_VOLU, KC_F11,  RGUI(KC_0), KC_EJCT,
-    KC_LBRC, KC_Q,          KC_W,        KC_F,    KC_P,    KC_B,                    KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN,    KC_RBRC,
-    KC_ESC,  HOME_A,        HOME_R,      HOME_S,  HOME_T,  KC_G,                    KC_M,    HOME_N,  HOME_E,  HOME_I,  HOME_O,     KC_QUOT,
-    KC_LSFT, KC_Z,          KC_X,        KC_C,    KC_D,    KC_V,                    KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH,    KC_RSFT,
-             KC_BSLS,       KC_GRV,      KC_LEFT, KC_RGHT,                                   KC_UP,   KC_DOWN, KC_MINS, KC_EQL,
+    KC_EQL,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                 KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS,
+    KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                 KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, KC_BSLS,
+    KC_ESC,  HOME_A,  HOME_R,  HOME_S,  HOME_T,  KC_G,                 KC_M,    HOME_N,  HOME_E,  HOME_I,  HOME_O,  KC_QUOT,
+    KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,                 KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
+             KC_GRV,  KC_BSLS, KC_LEFT, KC_RGHT,                                KC_UP,   KC_DOWN, KC_LBRC, KC_RBRC,
     
-                                                  LCAG(KC_F), HYPR(KC_UP),          HYPR(KC_DOWN), LCAG(KC_TAB),
-                                                              HYPR(KC_LEFT),        HYPR(KC_RGHT),
-                       LSFT_T(KC_BSPC), LT(_NUMBERS, KC_TAB), TG(_MOUSE),           RGB_MOD,       LT(_SYMBOLS, KC_ENT), LSFT_T(KC_SPC)
-  ),
-  [_NUMBERS] = LAYOUT(
-    ____, ____, ____, ____, ____, ____, ____, ____, ____, QK_BOOT, ____, ____, ____, ____, ____, ____, ____, ____,
-    ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____,
-    ____, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7, KC_8, KC_9, KC_0, ____,
-    ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____,
-    ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____,
-    ____, ____, KC_LEFT, KC_RGHT, KC_UP, KC_DOWN, KC_PMNS, KC_PPLS,
-    ____, ____, MEH(KC_RGHT), LCAG(KC_RGHT),
-    ____, ____,
-    ____, KC_TRNS, ____, ____, KC_ENT, RSFT_T(KC_SPC)
-  ),
-  [_SYMBOLS] = LAYOUT(
-    ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____,
-    ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____,
-    ____, KC_EXLM, KC_AT, KC_HASH, KC_DLR, KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, ____,
-    ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____,
-    ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____,
-    ____, ____, ____, ____, ____, ____, ____, ____,
-    LCAG(KC_LEFT), MEH(KC_LEFT), ____, ____,
-    ____, ____,
-    KC_BSPC, ____, ____, ____, KC_TRNS, ____
+                                        THMB_LA, THMB_LB,              HYPR(KC_DOWN), LCAG(KC_TAB),
+                                                 THMB_LC,              HYPR(KC_RGHT),
+                               THMB_L1, THMB_L2, THMB_LD,              RGB_MOD, THMB_R2, THMB_R1
   ),
   [_MOUSE] = LAYOUT(
     ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, KC_PSCR, ____, ____, ____, ____,
