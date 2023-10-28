@@ -53,7 +53,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     
                                         THMB_LA, THMB_LB,              HYPR(KC_DOWN), LCAG(KC_TAB),
                                                  THMB_LC,              HYPR(KC_RGHT),
-                               THMB_L1, THMB_L2, THMB_LD,              RGB_MOD, THMB_R2, THMB_R1
+                               THMB_L1, THMB_L2, THMB_LD,              QK_LEAD, THMB_R2, THMB_R1
   ),
   [_MOUSE] = LAYOUT(
     ____, ____, ____, ____, ____, ____, ____, ____, ____,              QK_BOOT, ____, ____, ____, KC_PSCR, ____, ____, ____, QK_BOOT,
@@ -67,3 +67,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_BTN1, KC_TAB, KC_TRNS, ____, KC_ENT, KC_BTN2
   )
 };
+
+// Leader key configuration
+void leader_end_user(void) {
+  if (leader_sequence_one_key(KC_F)) {
+      // Leader, f => Types the below string
+      SEND_STRING("QMK is awesome.");
+  } else if (leader_sequence_two_keys(KC_D, KC_D)) {
+      // Leader, d, d => Ctrl+A, Ctrl+C
+      SEND_STRING(SS_LCTL("a") SS_LCTL("c"));
+  } else if (leader_sequence_three_keys(KC_D, KC_D, KC_S)) {
+      // Leader, d, d, s => Types the below string
+      SEND_STRING("https://start.duckduckgo.com\n");
+  } else if (leader_sequence_two_keys(KC_A, KC_S)) {
+      // Leader, a, s => GUI+S
+      tap_code16(LGUI(KC_S));
+  }
+}
