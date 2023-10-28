@@ -56,10 +56,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                THMB_L1, THMB_L2, THMB_LD,              RGB_MOD, THMB_R2, THMB_R1
   ),
   [_MOUSE] = LAYOUT(
-    ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, ____, KC_PSCR, ____, ____, ____, ____,
-    ____, LCTL(KC_DOWN), LCTL(KC_UP), KC_MPRV, KC_MPLY, KC_MNXT, KC_MUTE, KC_VOLD, KC_VOLU, KC_F11, RGUI(KC_0), ____,
-    LGUI(KC_LBRC), LGUI(KC_Q), LGUI(KC_W), KC_WH_U, LGUI(KC_P), ____, ____, KC_RGUI, KC_MS_U, ____, ____, RGUI(KC_RBRC),
-    KC_ESC, LGUI(KC_A), KC_WH_L, KC_WH_D, KC_WH_R, LGUI(KC_D), ____, KC_MS_L, KC_MS_D, KC_MS_R, RGUI(KC_O), ____,
+    ____, ____, ____, ____, ____, ____, ____, ____, ____,              QK_BOOT, ____, ____, ____, KC_PSCR, ____, ____, ____, QK_BOOT,
+    ____, LCTL(KC_DOWN), LCTL(KC_UP), KC_MPRV, KC_MPLY, KC_MNXT,       KC_MUTE, KC_VOLD, KC_VOLU, KC_F11, RGUI(KC_0), ____,
+    LGUI(KC_LBRC), LGUI(KC_Q), LGUI(KC_W), KC_WH_U, LGUI(KC_P),        ____, ____, KC_RGUI, KC_MS_U, ____, ____, RGUI(KC_RBRC),
+    KC_ESC, LGUI(KC_A), KC_WH_L, KC_WH_D, KC_WH_R, LGUI(KC_D),         ____, KC_MS_L, KC_MS_D, KC_MS_R, RGUI(KC_O), ____,
     KC_LSFT, LGUI(KC_Z), KC_ACL0, LGUI(KC_C), LGUI(KC_V), LGUI(KC_B), RGUI(KC_K), RGUI(KC_M), ____, ____, ____, KC_RSFT,
     KC_SPC, LGUI(KC_GRV), KC_LEFT, KC_RGHT, KC_UP, KC_DOWN, KC_MINS, KC_EQL,
     LCAG(KC_LEFT), LCAG(KC_TAB), KC_BTN1, KC_BTN2,
