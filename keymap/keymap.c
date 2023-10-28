@@ -69,6 +69,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 // Leader key configuration
+void leader_start_user(void) {
+    // Do something when the leader key is pressed
+}
+
 void leader_end_user(void) {
   if (leader_sequence_one_key(KC_F)) {
       // Leader, f => Types the below string
