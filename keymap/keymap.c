@@ -13,7 +13,7 @@
 #define HOME_O LT(_MOUSE, KC_O)
 
 #define THMB_L1 LSFT_T(KC_BSPC)
-#define THMB_L2 KC_DEL
+#define THMB_L2 LT(_VIM, KC_DEL)
 #define THMB_LA LCAG(KC_F)
 #define THMB_LB HYPR(KC_UP)
 #define THMB_LC HYPR(KC_LEFT)
@@ -25,6 +25,7 @@
 // Layers
 enum layer_names {
   _BASE_COLEMAK_DH = 0,
+  _VIM,
   _MOUSE
 };
 
@@ -55,6 +56,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                                  THMB_LC,              HYPR(KC_RGHT),
                                THMB_L1, THMB_L2, THMB_LD,              QK_LEAD, THMB_R2, THMB_R1
   ),
+  [_VIM] = LAYOUT(
+    ____, ____, ____, ____, ____, ____, ____, ____, ____,              ____, ____, ____, ____, ____, ____, ____, ____, ____,
+    
+    ____,    ____,    ____,    ____,    ____,    ____,                 ____,    ____,    ____,    ____,    ____,    ____,
+    ____,    ____,    ____,    ____,    ____,    ____,                 ____,    ____,    ____,    ____,    ____,    ____,
+    ____,    ____,    ____,    ____,    ____,    ____,                 ____,    KC_H,    KC_J,    KC_K,    KC_L,    ____,
+    ____,    ____,    ____,    ____,    ____,    ____,                 ____,    ____,    ____,    ____,    ____,    ____,
+             ____,    ____,    ____,    ____,                                   ____,    ____,    ____,    ____,
+    
+                                        ____,    ____,                 ____,    ____,
+                                                 ____,                 ____,
+                               ____,    ____,    ____,                 ____,    ____,    ____
+  ),
   [_MOUSE] = LAYOUT(
     ____, ____, ____, ____, ____, ____, ____, ____, ____,              QK_BOOT, ____, ____, ____, KC_PSCR, ____, ____, ____, QK_BOOT,
     ____, LCTL(KC_DOWN), LCTL(KC_UP), KC_MPRV, KC_MPLY, KC_MNXT,       KC_MUTE, KC_VOLD, KC_VOLU, KC_F11, RGUI(KC_0), ____,
@@ -76,7 +90,10 @@ void leader_start_user(void) {
 void leader_end_user(void) {
   if (leader_sequence_one_key(KC_F)) {
       // Leader, f => Types the below string
-      SEND_STRING("QMK is awesome.");
+      SEND_STRING("Leader F");
+  if (leader_sequence_one_key(KC_D)) {
+      // Leader, f => Types the below string
+      SEND_STRING("Leader D");
   } else if (leader_sequence_two_keys(KC_D, KC_D)) {
       // Leader, d, d => Ctrl+A, Ctrl+C
       SEND_STRING(SS_LCTL("a") SS_LCTL("c"));
