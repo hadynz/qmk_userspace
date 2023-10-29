@@ -87,20 +87,17 @@ void leader_end_user(void) {
   bool did_leader_succeed = false;
 
   if (leader_sequence_one_key(KC_F)) {
-      SEND_STRING("Leader F");
-      did_leader_succeed = true;
-  if (leader_sequence_one_key(KC_D)) {
-      SEND_STRING("Leader D");
-      did_leader_succeed = true;
-  } else if (leader_sequence_two_keys(KC_D, KC_D)) {
-      SEND_STRING(SS_LCTL("a") SS_LCTL("c"));
-      did_leader_succeed = true;
+    SEND_STRING("Leader F");
+    did_leader_succeed = true;
+  } else if (leader_sequence_one_key(KC_D)) {
+    SEND_STRING("Leader D");
+    did_leader_succeed = true;
   } else if (leader_sequence_three_keys(KC_D, KC_D, KC_S)) {
-      SEND_STRING("https://start.duckduckgo.com\n");
-      did_leader_succeed = true;
+    SEND_STRING("https://start.duckduckgo.com\n");
+    did_leader_succeed = true;
   } else if (leader_sequence_two_keys(KC_A, KC_S)) {
-      tap_code16(LGUI(KC_S));
-      did_leader_succeed = true;
+    tap_code16(LGUI(KC_S));
+    did_leader_succeed = true;
   }
 
   if (did_leader_succeed) {
