@@ -104,8 +104,8 @@ void leader_end_user(void) {
   }
 
   if (did_leader_succeed) {
-    SEND_STRING('s');
+    SEND_STRING("s");
   } else {
-    SEND_STRING('f');
+    SEND_STRING("f");
   }
 }
