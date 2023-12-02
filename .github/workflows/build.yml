@@ -24,7 +24,7 @@ jobs:
           persist-credentials: false
 
       - name: Symlink keymap from userspace to qmk directory
-        run: ln -s ../../../${{ github.actor }}/keymap keyboards/kinesis/keymaps/${{ github.actor }}
+        run: ln -s ../../../${{ github.actor }}/keymap_kinesis keyboards/kinesis/keymaps/${{ github.actor }}
 
       - name: Build firmware
         run: |

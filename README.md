@@ -11,14 +11,17 @@ very first ergo keyboard.
 2. Link this repository to the qmk directory a keycap folder
 
 ```bash
-# Create a symlink of the `keymap` folder into `kinesis` keyboard folder inside qmk directory
-ln -s $PWD/keymap ../qmk_firmware/keyboards/kinesis/keymaps/hadynz
+# Create a symlink of the `keymap_kinesis` folder into `kinesis` keyboard folder inside qmk directory
+ln -s $PWD/keymap_kinesis ../qmk_firmware/keyboards/kinesis/keymaps/hadynz
+ln -s $PWD/keymap_keychron_q2 ../qmk_firmware/keyboards/keychron/q2/ansi_encoder/keymaps/hadynz
 
 # Compile
 qmk compile -kb kinesis/stapelberg -km hadynz
+qmk compile -kb keychron/q2/ansi_encoder -km hadynz
 
 # Create (QMK Configurator) JSON file from keymap
-qmk c2json -kb kinesis/stapelberg -km hadynz ./keymap/keymap.c > keymap.json
+qmk c2json -kb kinesis/stapelberg -km hadynz ./keymap_kinesis/keymap.c > keymap_kinesis.json
+qmk c2json -kb keychron/q2/ansi_encoder -km hadynz ./keymap_keychron_q2/keymap.c > keymap_keychron_q2.json
 
 # Render keyma to SVG
 keymap parse -c 10 -q keymap.json > kinesis_keymap.yaml
