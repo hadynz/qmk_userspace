@@ -1,5 +1,12 @@
 #include QMK_KEYBOARD_H
 
+// Tap Dance Declarations
+enum {
+ CT_CLN = 0,
+ TD_BSPC,
+};
+
+
 // Keycodes
 #define ____ KC_NO
 
@@ -12,9 +19,11 @@
 #define HOME_I RCTL_T(KC_I)
 #define HOME_O LT(_MOUSE, KC_O)
 
-#define THMB_L1 LSFT_T(KC_BSPC)
+#define HYP_ESC HYPR_T(KC_ESC)
+
+#define THMB_L1 TD(TD_BSPC)
 #define THMB_L2 LT(_VIM, KC_DEL)
-#define THMB_LA LCAG(KC_F)
+#define THMB_LA KC_BSPC
 #define THMB_LB HYPR(KC_UP)
 #define THMB_LC HYPR(KC_LEFT)
 #define THMB_LD TG(_MOUSE)
@@ -28,6 +37,7 @@ enum layer_names {
   _VIM,
   _MOUSE
 };
+
 
 // Combo Keycodes
 const uint16_t PROGMEM undo_combo_keys[] = {KC_Z, KC_X, COMBO_END};
@@ -47,8 +57,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_CAPS, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, KC_F7, KC_F8,   KC_F9, KC_F10, KC_F11, KC_F12, KC_PSCR, KC_SCRL, KC_PAUS, RGB_TOG, TG(_BASE_COLEMAK_DH),
     
     KC_EQL,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                 KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS,
-    KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                 KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, KC_BSLS,
-    KC_ESC,  HOME_A,  HOME_R,  HOME_S,  HOME_T,  KC_G,                 KC_M,    HOME_N,  HOME_E,  HOME_I,  HOME_O,  KC_QUOT,
+    KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                 KC_J,    KC_L,    KC_U,    KC_Y,    TD(CT_CLN),  KC_BSLS,
+    HYP_ESC, HOME_A,  HOME_R,  HOME_S,  HOME_T,  KC_G,                 KC_M,    HOME_N,  HOME_E,  HOME_I,  HOME_O,  KC_QUOT,
     KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,                 KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
              KC_GRV,  KC_BSLS, KC_LEFT, KC_RGHT,                                KC_UP,   KC_DOWN, KC_LBRC, KC_RBRC,
     
@@ -59,9 +69,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_VIM] = LAYOUT(
     ____, ____, ____, ____, ____, ____, ____, ____, ____,              ____, ____, ____, ____, ____, ____, ____, ____, ____,
     
+    ____,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                 KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    ____,
     ____,    ____,    ____,    ____,    ____,    ____,                 ____,    ____,    ____,    ____,    ____,    ____,
-    ____,    ____,    ____,    ____,    ____,    ____,                 ____,    ____,    ____,    ____,    ____,    ____,
-    ____,    ____,    ____,    ____,    ____,    ____,                 ____,    KC_H,    KC_J,    KC_K,    KC_L,    ____,
+    ____,    ____,    ____,    ____,    ____,    ____,                 KC_H,    KC_J,    KC_K,    KC_L,    ____,    ____,
     ____,    ____,    ____,    ____,    ____,    ____,                 ____,    ____,    ____,    ____,    ____,    ____,
              ____,    ____,    ____,    ____,                                   ____,    ____,    ____,    ____,
     
@@ -106,3 +116,46 @@ void leader_end_user(void) {
     SEND_STRING("f");
   }
 }
+
+void dance_cln_finished (tap_dance_state_t *state, void *user_data) {
+  if (state->count == 1) {
+    register_code (KC_RSFT);
+    register_code (KC_SCLN);
+  } else {
+    register_code (KC_SCLN);
+  }
+}
+
+void dance_cln_reset (tap_dance_state_t *state, void *user_data) {
+  if (state->count == 1) {
+    unregister_code (KC_RSFT);
+    unregister_code (KC_SCLN);
+  } else {
+    unregister_code (KC_SCLN);
+  }
+}
+
+// Backspace tap dance - backspace on tap, alt+backspace on hold (delete word)
+void backspace_finished (tap_dance_state_t *state, void *user_data) {
+  if (state->count == 1 && !state->interrupted) {
+    register_code (KC_BSPC);
+  } else {
+    register_code (KC_LALT);
+    register_code (KC_BSPC);
+  }
+}
+
+void backspace_reset (tap_dance_state_t *state, void *user_data) {
+  if (state->count == 1 && !state->interrupted) {
+    unregister_code (KC_BSPC);
+  } else {
+    unregister_code (KC_LALT);
+    unregister_code (KC_BSPC);
+  }
+}
+
+// All tap dance functions would go here. Only showing this one.
+tap_dance_action_t tap_dance_actions[] = {
+ [CT_CLN] = ACTION_TAP_DANCE_FN_ADVANCED (NULL, dance_cln_finished, dance_cln_reset),
+ [TD_BSPC] = ACTION_TAP_DANCE_FN_ADVANCED (NULL, backspace_finished, backspace_reset)
+};
