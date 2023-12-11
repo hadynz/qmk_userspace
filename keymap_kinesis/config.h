@@ -4,6 +4,9 @@
 #define LEADER_PER_KEY_TIMING
 #define LEADER_NO_TIMEOUT
 
-#define PERMISSIVE_HOLD
+// #define PERMISSIVE_HOLD
 
-#define TAPPING_TERM 150
+#define TAPPING_TERM 300
+
+// Default value is 50. Decrease so rolling keys configured for combos don't misfire
+#define COMBO_TERM 30
