@@ -4,12 +4,14 @@
 enum {
   TD_F9_F10 = 0,
   TD_F11_F12,
+  TD_PLAY_NEXT,
 };
 
 // Tap Dance definitions
 tap_dance_action_t tap_dance_actions[] = {
   [TD_F9_F10] = ACTION_TAP_DANCE_DOUBLE(KC_F9, KC_F10), // Tap once for F9, twice for F10
   [TD_F11_F12] = ACTION_TAP_DANCE_DOUBLE(KC_F11, KC_F12), // Tap once for F11, twice for F12
+  [TD_PLAY_NEXT] = ACTION_TAP_DANCE_DOUBLE(KC_MPLY, KC_MNXT), // Tap once for media play, twice for media next
 };
 
 // Custom Keycodes
@@ -19,6 +21,7 @@ tap_dance_action_t tap_dance_actions[] = {
 #define KC_FLXP LGUI(KC_E)
 #define C_ZOOM1 TD(TD_F9_F10)
 #define C_ZOOM2 TD(TD_F11_F12)
+#define C_MEDIA TD(TD_PLAY_NEXT)
 
 // Layers declarations
 enum layers{
@@ -31,7 +34,7 @@ enum layers{
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [MAC_BASE] = LAYOUT_ansi_67(
-    KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS,  KC_EQL,   KC_BSPC,          KC_MPLY,
+    KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS,  KC_EQL,   KC_BSPC,          C_MEDIA,
     MEH_TAB, KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC,  KC_RBRC,  KC_BSLS,          C_ZOOM1,
     HYP_ESC, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,            KC_ENT,           C_ZOOM2,
     KC_LSFT,          KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,            KC_RSFT, KC_UP,
@@ -39,7 +42,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [COLEMAK_BASE] = LAYOUT_ansi_67(
-    KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS,  KC_EQL,   KC_BSPC,          KC_MPLY,
+    KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS,  KC_EQL,   KC_BSPC,          C_MEDIA,
     MEH_TAB, KC_Q,    KC_W,    KC_F,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y,    KC_O,    KC_SCLN, KC_LBRC,  KC_RBRC,  KC_BSLS,          KC_DEL,
     HYP_ESC, KC_A,    KC_R,    KC_S,    KC_T,    KC_G,    KC_M,    KC_N,    KC_E,    KC_I,    KC_O,    KC_QUOT,            KC_ENT,           KC_HOME,
     KC_LSFT,          KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,    KC_K,    KC_H,    KC_COMM, KC_DOT,  KC_SLSH,            KC_RSFT, KC_UP,
@@ -79,4 +82,15 @@ const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
   [_FN2]         = { ENCODER_CCW_CW(RGB_VAD, RGB_VAI) },
   [_FN3]         = { ENCODER_CCW_CW(_______, _______) },
 };
+#endif
+
+#if defined(TAPPING_TERM_PER_KEY)
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+  switch (keycode) {
+    case C_MEDIA:
+      return TAPPING_TERM + 500;
+    default:
+      return TAPPING_TERM;
+  }
+}
 #endif
