@@ -74,6 +74,32 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   )
 };
 
+#if defined(COMBO_ENABLE)
+const uint16_t PROGMEM qk_boot_combo[] = {KC_MINS, KC_EQL, COMBO_END};
+const uint16_t PROGMEM cmd_q_combo[] = {KC_Q, KC_W, COMBO_END};
+const uint16_t PROGMEM cmd_w_combo[] = {KC_W, KC_E, COMBO_END};
+const uint16_t PROGMEM cmd_l_combo[] = {KC_L, KC_SCLN, COMBO_END};
+const uint16_t PROGMEM cmd_f_combo[] = {KC_F, KC_G, COMBO_END};
+const uint16_t PROGMEM cmd_k_combo[] = {KC_K, KC_L, COMBO_END};
+const uint16_t PROGMEM undo_combo_keys[] = {KC_Z, KC_X, COMBO_END};
+const uint16_t PROGMEM cut_combo_keys[] = {KC_X, KC_C, COMBO_END};
+const uint16_t PROGMEM copy_combo_keys[] = {KC_C, KC_V, COMBO_END};
+const uint16_t PROGMEM paste_combo_keys[] = {KC_V, KC_B, COMBO_END};
+
+combo_t key_combos[] = {
+  COMBO(qk_boot_combo, QK_BOOT),
+  COMBO(cmd_q_combo, LGUI(KC_Q)),
+  COMBO(cmd_w_combo, LGUI(KC_W)),
+  COMBO(cmd_l_combo, LGUI(KC_L)),
+  COMBO(cmd_f_combo, LGUI(KC_F)),
+  COMBO(cmd_k_combo, LGUI(KC_K)),
+  COMBO(undo_combo_keys, LGUI(KC_Z)),
+  COMBO(cut_combo_keys, LGUI(KC_X)),
+  COMBO(copy_combo_keys, LGUI(KC_C)),
+  COMBO(paste_combo_keys, LGUI(KC_V)),
+};
+#endif
+
 #if defined(ENCODER_MAP_ENABLE)
 const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
   [MAC_BASE]     = { ENCODER_CCW_CW(KC_VOLD, KC_VOLU) },
