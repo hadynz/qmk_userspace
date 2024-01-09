@@ -1,8 +1,5 @@
-// Used to set a custom value specifically for volume control button
-#define TAPPING_TERM_PER_KEY
+#define TAPPING_TERM_PER_KEY // Used to set a custom value specifically for volume control button
 
-// Default value is 50. Decrease so rolling keys configured for combos don't misfire
-#define COMBO_TERM 22
-
-// Changes how combo timers are handled. Makes it harder for misfires to happen
-#define COMBO_STRICT_TIMER
+#define COMBO_TERM 22 // How quickly all combo keys must be pressed to register a combo
+#define COMBO_MUST_HOLD_MODS // Makes it so that you must hold down the modifier keys for combos to register
+#define COMBO_HOLD_TERM 175 // How long you must hold down the modifier keys for combos to register

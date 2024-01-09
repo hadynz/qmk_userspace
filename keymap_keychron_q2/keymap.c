@@ -75,10 +75,13 @@ const uint16_t PROGMEM cmd_k_combo[] = {KC_K, KC_L, COMBO_END};
 const uint16_t PROGMEM cmd_t_combo[] = {KC_T, KC_Y, COMBO_END};
 const uint16_t PROGMEM cmd_o_combo[] = {KC_O, KC_P, COMBO_END};
 const uint16_t PROGMEM cmd_n_combo[] = {KC_N, KC_M, COMBO_END};
+const uint16_t PROGMEM cmd_lbracket_combo[] = {KC_LBRC, KC_RBRC, COMBO_END};
+const uint16_t PROGMEM cmd_rbracket_combo[] = {KC_RBRC, KC_BSLS, COMBO_END};
 const uint16_t PROGMEM undo_combo_keys[] = {KC_Z, KC_X, COMBO_END};
 const uint16_t PROGMEM cut_combo_keys[] = {KC_X, KC_C, COMBO_END};
 const uint16_t PROGMEM copy_combo_keys[] = {KC_C, KC_V, COMBO_END};
 const uint16_t PROGMEM paste_combo_keys[] = {KC_V, KC_B, COMBO_END};
+const uint16_t PROGMEM lock_mac_keys[] = {MEH_TAB, KC_Q, COMBO_END};
 
 combo_t key_combos[] = {
   COMBO(qk_boot_combo, QK_BOOT),
@@ -90,10 +93,13 @@ combo_t key_combos[] = {
   COMBO(cmd_t_combo, LGUI(KC_T)),
   COMBO(cmd_o_combo, LGUI(KC_O)),
   COMBO(cmd_n_combo, LGUI(KC_N)),
+  COMBO(cmd_lbracket_combo, LGUI(KC_LBRC)),
+  COMBO(cmd_rbracket_combo, LGUI(KC_RBRC)),
   COMBO(undo_combo_keys, LGUI(KC_Z)),
   COMBO(cut_combo_keys, LGUI(KC_X)),
   COMBO(copy_combo_keys, LGUI(KC_C)),
   COMBO(paste_combo_keys, LGUI(KC_V)),
+  COMBO(lock_mac_keys, LGUI(LCTL(KC_Q))),
 };
 #endif
 
