@@ -24,6 +24,9 @@ tap_dance_action_t tap_dance_actions[] = {
 #define C_MEDIA TD(TD_PLAY_NEXT) // Media control -- Tap once for media play, twice for media next
 #define LAYER_C MO(_FN2) // Layer switch -- Momentarily turn on _FN2 layer
 #define LAYER_F MO(FUNC_BASE) // Layer switch -- Momentarily turn on FUNC_BASE layer
+#define L_CTRL  LCTL_T(KC_F6) // Hold for Ctrl, Tap for F6
+#define L_ALT   LALT_T(KC_F7) // Hold for Alt/Option, Tap for F7
+#define L_GUI   KC_LCMD
 
 // Layers declarations
 enum layers{
@@ -39,7 +42,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     MEH_TAB, KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC, KC_RBRC, KC_BSLS,          C_ZOOM1,
     HYP_ESC, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,          KC_ENT,           C_ZOOM2,
     KC_LSFT,          KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,          KC_RSFT, KC_UP,
-    KC_LCTL, KC_LOPT, KC_LCMD,                            KC_SPC,                             KC_RCMD, LAYER_F, KC_ROPT, KC_LEFT, KC_DOWN, KC_RGHT
+    L_CTRL,  L_ALT,   L_GUI,                              KC_SPC,                             KC_RCMD, LAYER_F, KC_ROPT, KC_LEFT, KC_DOWN, KC_RGHT
   ),
 
   [COLEMAK_BASE] = LAYOUT_ansi_67(
@@ -109,9 +112,12 @@ const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
 #if defined(TAPPING_TERM_PER_KEY)
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
-    // The rotary media button is very slow to press, so we need to increase the tapping term
     case C_MEDIA:
-      return TAPPING_TERM + 500;
+      return TAPPING_TERM + 500; // The rotary media button is very slow to press, so we need to increase the tapping term 
+
+    case L_CTRL:
+    case L_ALT:
+      return 90; // My modifier presses are very quick; need a very short tapping term
     default:
       return TAPPING_TERM;
   }
