@@ -23,14 +23,14 @@ tap_dance_action_t tap_dance_actions[] = {
 #define C_ZOOM2 TD(TD_F11_F12) // Zoom control -- Tap once for F11, twice for F12
 #define C_MEDIA TD(TD_PLAY_NEXT) // Media control -- Tap once for media play, twice for media next
 #define LAYER_C MO(_FN2) // Layer switch -- Momentarily turn on _FN2 layer
-#define LAYER_F MO(_FN3) // Layer switch -- Momentarily turn on _FN3 layer
+#define LAYER_F MO(FUNC_BASE) // Layer switch -- Momentarily turn on FUNC_BASE layer
 
 // Layers declarations
 enum layers{
   MAC_BASE,
   COLEMAK_BASE,
   _FN2,
-  _FN3
+  FUNC_BASE
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -58,7 +58,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______, _______, _______,                            _______,                            _______, _______,  _______,  _______, _______, _______
   ),
 
-  [_FN3] = LAYOUT_ansi_67(
+  [FUNC_BASE] = LAYOUT_ansi_67(
     KC_TILD, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,   KC_F12,   _______,          _______,
     RGB_TOG, RGB_MOD, RGB_VAI, RGB_HUI, RGB_SAI, RGB_SPI, _______, _______, _______, _______, _______, _______,  _______,  _______,          _______,
     _______, RGB_RMOD,RGB_VAD, RGB_HUD, RGB_SAD, RGB_SPD, _______, _______, _______, _______, _______, _______,            _______,          _______,
@@ -102,7 +102,7 @@ const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
   [MAC_BASE]     = { ENCODER_CCW_CW(KC_VOLD, KC_VOLU) },
   [COLEMAK_BASE] = { ENCODER_CCW_CW(KC_VOLD, KC_VOLU) },
   [_FN2]         = { ENCODER_CCW_CW(RGB_VAD, RGB_VAI) },
-  [_FN3]         = { ENCODER_CCW_CW(_______, _______) },
+  [FUNC_BASE]    = { ENCODER_CCW_CW(_______, _______) },
 };
 #endif
 
