@@ -86,6 +86,7 @@ const uint16_t PROGMEM cut_combo_keys[] = {KC_X, KC_C, COMBO_END};
 const uint16_t PROGMEM copy_combo_keys[] = {KC_C, KC_V, COMBO_END};
 const uint16_t PROGMEM paste_combo_keys[] = {KC_V, KC_B, COMBO_END};
 const uint16_t PROGMEM lock_mac_keys[] = {MEH_TAB, KC_Q, COMBO_END};
+const uint16_t PROGMEM left_alt_combo[] = {KC_A, KC_S, COMBO_END};
 
 combo_t key_combos[] = {
   COMBO(qk_boot_combo, QK_BOOT),
@@ -100,6 +101,7 @@ combo_t key_combos[] = {
   COMBO(copy_combo_keys, LGUI(KC_C)),
   COMBO(paste_combo_keys, LGUI(KC_V)),
   COMBO(lock_mac_keys, LGUI(LCTL(KC_Q))),
+  COMBO(left_alt_combo, KC_LOPT),
 };
 #endif
 
