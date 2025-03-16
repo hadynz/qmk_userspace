@@ -7,3 +7,9 @@ TAP_DANCE_ENABLE = yes
 
 # Enable Combos
 COMBO_ENABLE = yes
+
+# Enable Mouse Keys
+MOUSEKEY_ENABLE = yes
+
+# Enable Bootmagic
+BOOTMAGIC_ENABLE = yes

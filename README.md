@@ -47,6 +47,7 @@ I've run into this issue sporadically before. When this happens, what has helped
 
 1. Use physical reset button on the keyboard to turn on DFU mode
 2. Flash the keyboard's original firmware again before flashing my custom firmware
+3. Clearing all build artifacts by running `qmk clean` in BOTH `qmk_firmware` and `qmk_userspace` directories
 
 For the Keychron Q2, the original firmware can be found [here][6].
 
